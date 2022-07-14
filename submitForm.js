@@ -1,6 +1,6 @@
 let submit = document.getElementById('submit')
 console.log(submit)
-const formName = 'webinarSingup'
+const formName = 'acknowledgeReceipt'
 console.log('form: ' + formName)
 let newForm = {}
 let submitted = 0
@@ -75,7 +75,28 @@ adminName.addEventListener('change', (e) => {
 	newForm.adminName = e.target.value;
   console.log(newForm.adminName);
 })
-  
+
+let staffDate = document.querySelector('input#staffDate')
+staffDate.addEventListener('change', (e) => {
+	console.log('changed')
+	newForm.staffDate = e.target.value;
+  console.log(newForm.staffDate);
+})
+
+let superDate = document.querySelector('input#superDate')
+superDate.addEventListener('change', (e) => {
+	console.log('changed')
+	newForm.superDate = e.target.value;
+  console.log(newForm.superDate);
+})
+
+let adminDate = document.querySelector('input#adminDate')
+adminDate.addEventListener('change', (e) => {
+	console.log('changed')
+	newForm.adminDate = e.target.value;
+  console.log(newForm.adminDate);
+})
+
 document.getElementById('submit').addEventListener("click", async (event) => {
     submitForm(newForm, formName)
 })
