@@ -97,40 +97,33 @@ adminDate.addEventListener('change', (e) => {
   console.log(newForm.adminDate);
 })
 
-document.getElementById('submit').addEventListener("click", async (event) => {
-    submitForm(newForm, formName)
+document.getElementById('printToPDF').addEventListener("click", async (event) => {
+  window.print();
 })
 
-async function submitForm(data, form) {
+async function uploadFile() {
+  let formData = new FormData(); 
+  formData.append("fileupload", fileupload.files[0]);
+    await fetch('http://localhost/upload', {
+    method: "POST", 
+    body: formData
+  }); 
+}
+
+async function updateStaff() {
+	
   const document = {
-    'form': form,
-    'data': data
-  }
-  console.log(document)
-  fetch('https://pffm.azurewebsites.net/form', {
+    toUpdate: { acknowledgementReceipt: true },
+  	form: 'receiptAcknowledgement'
+    }
+  fetch('https://pffm.azurewebsites.net/employee', {
     method: "POST",
     headers: {
       'Content-Type': 'application/json',
-      "Access-Control-Allow-Origin" : "*"
+      "Access-Control-Allow-Origin": "*"
     },
     body: JSON.stringify(document)
   })
-    .then((response) => {
-      if (response.status == 200) {
-      showSuccess()
-      } else {
-        showError(response.body)
-      }
-    })
-    .catch((err) => showError(err))
-}
-
-
-function showSuccess() {
-    document.getElementById('returnMessage').innerHTML = 'Form has been successfully submitted'
-}
-
-function showError(err) {
-    console.error
-    document.getElementById('returnMessage').innerHTML = `An error occurred when submitting this form, which was ${err}. Please contact the administrator for help.`
+    .then(() => console.log('resolved'))
+    .catch(console.error)
 }
